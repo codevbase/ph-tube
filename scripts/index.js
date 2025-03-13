@@ -60,11 +60,12 @@ const displayVideos = (videos) => {
                     </div>
                     <div class="intro">
                         <h2 class="text-sm font-semibold">${video.title}</h2>
-                        <p class="text-sm text-gray-400 flex gap-1">${video.authors[0].profile_name}<img
-                                src="https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png" class="w-5 h-5"></p>
+                        <p class="text-sm text-gray-400 flex gap-1">
+                            ${video.authors[0].profile_name} 
+                            ${video.authors[0].verified ? `<img src="https://img.icons8.com/?size=96&id=98A4yZTt9abw&format=png" class="w-5 h-5" />` : ''}
+                        </p>
                         <p class="text-sm text-gray-400">${video.others.views} views</p>
                     </div>
-
                 </div>
             </div>
         `;
