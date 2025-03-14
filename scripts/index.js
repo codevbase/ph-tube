@@ -17,10 +17,10 @@ const removeActiveClass = () => {
     //     button.classList.remove('active');
     // });
 
-    for(let btn of activeButtons) {
+    for (let btn of activeButtons) {
         btn.classList.remove('active');
     }
-    console.log(activeButtons);  
+    console.log(activeButtons);
 
 }
 
@@ -55,7 +55,7 @@ const displayVideos = (videos) => {
     // clear the container
     videoContainer.innerHTML = '';
 
-    if(videos.length === 0) {
+    if (videos.length === 0) {
         videoContainer.innerHTML = `
              <div class="col-span-full flex justify-center items-center flex-col py-20">
                 <img class="w-[120px]" src="./assets/Icon.png" alt="">
@@ -93,6 +93,7 @@ const displayVideos = (videos) => {
                         <p class="text-sm text-gray-400">${video.others.views} views</p>
                     </div>
                 </div>
+                <button onclick=loadVideoDetails('${video.video_id}') class="btn btn-block">Show details</button>
             </div>
         `;
 
@@ -147,13 +148,55 @@ const loadCategoryVideos = async (category_id) => {
         console.log(clickedBtn);
 
         displayVideos(videos);
-        
-           
-        
+
+
+
 
     } catch (err) {
         console.log(err);
     }
+}
+
+const loadVideoDetails = async(video_id) => {
+
+    try {
+        const url = `https://openapi.programming-hero.com/api/phero-tube/video/${video_id}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        const video = data.video;
+        displayVideoDetails(video);
+
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
+const displayVideoDetails = (video) => {
+    // get the modal
+    document.getElementById('video_details').showModal();
+    const detailsContainer = document.getElementById('details-container');
+    detailsContainer.innerHTML = `
+        
+        <div class="card bg-base-100 image-full shadow-sm">
+  <figure>
+    <img
+      src="${video.thumbnail}" />
+  </figure>
+  <div class="card-body">
+    <h2 class="text-2xl font-bold">${video.title}</h2>
+    <p class="text-xs"> ${video.description}</p>
+    <div class="card-actions justify-end">
+    
+    </div>
+  </div>
+</div>
+    `;
+    console.log(video);
+    // get the modal
+    
+   
+
 }
 
 loadCategories();

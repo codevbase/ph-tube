@@ -33,7 +33,8 @@
     <main>
         <nav id="category-container" class="flex justify-center py-5 gap-5">
             <div>
-                <button id="btn-all" onclick="loadVideos()" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">All</button>
+                <button id="btn-all" onclick="loadVideos()"
+                    class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white">All</button>
             </div>
         </nav>
 
@@ -46,6 +47,23 @@
 
 
         </section>
+
+
+        <!-- Open the modal using ID.showModal() method -->
+        <!-- <button class="btn" onclick="my_modal_1.showModal()">open modal</button> -->
+        <dialog id="video_details" class="modal">
+            <div class="modal-box">
+                <div id="details-container">
+                    
+                </div>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <!-- if there is a button in form, it will close the modal -->
+                        <button class="btn">Close</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
 
     </main>
 
