@@ -10,6 +10,18 @@
 //     })
 //     .catch(err => console.log(err));
 // }
+const showLoader = () => {
+    const loader = document.getElementById('loader');
+    const videoContainer = document.getElementById('video-container');
+    loader.classList.remove('hidden');
+    videoContainer.classList.add('hidden');
+}
+const hideLoader = () => {
+    const loader = document.getElementById('loader');
+    const videoContainer = document.getElementById('video-container');
+    loader.classList.add('hidden');
+    videoContainer.classList.remove('hidden');
+}
 
 const removeActiveClass = () => {
     const activeButtons = document.getElementsByClassName('active');
@@ -62,6 +74,7 @@ const displayVideos = (videos) => {
                 <h2 class="text-2xl font-bold">Oops!! Sorry, there is content here.</h2>
             </div>
         `;
+        hideLoader();
         return;
     }
 
@@ -99,7 +112,9 @@ const displayVideos = (videos) => {
 
         // append the div to the container
         videoContainer.appendChild(videoDiv);
+       
     });
+    hideLoader();
 };
 
 const loadCategories = async () => {
@@ -115,6 +130,7 @@ const loadCategories = async () => {
 
 const loadVideos = async () => {
     try {
+        showLoader();
         const res = await fetch('https://openapi.programming-hero.com/api/phero-tube/videos');
         const data = await res.json();
         const videos = data.videos;
@@ -133,6 +149,8 @@ const loadCategoryVideos = async (category_id) => {
         // const data = await res.json();
         // const videos = data.videos;
         // displayVideos(videos);
+
+        showLoader();
         url = `https://openapi.programming-hero.com/api/phero-tube/category/${category_id}`;
         const res = await fetch(url);
         const data = await res.json();
