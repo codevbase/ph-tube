@@ -11,6 +11,19 @@
 //     .catch(err => console.log(err));
 // }
 
+const removeActiveClass = () => {
+    const activeButtons = document.getElementsByClassName('active');
+    // activeButtons.forEach(button => {
+    //     button.classList.remove('active');
+    // });
+
+    for(let btn of activeButtons) {
+        btn.classList.remove('active');
+    }
+    console.log(activeButtons);  
+
+}
+
 const displayCategories = (categories) => {
     // get the container
     const categoryContainer = document.getElementById('category-container');
@@ -23,7 +36,7 @@ const displayCategories = (categories) => {
         const categoryDiv = document.createElement('div');
         categoryDiv.innerHTML =
             `
-        <button class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white" onclick ="loadCategoryVideos(${category.category_id})">${category.category}</button>
+        <button id="btn-${category.category_id}" class="btn btn-sm hover:bg-[#FF1F3D] hover:text-white" onclick ="loadCategoryVideos(${category.category_id})">${category.category}</button>
         `
 
         // append the button to the container
@@ -41,6 +54,16 @@ const displayVideos = (videos) => {
 
     // clear the container
     videoContainer.innerHTML = '';
+
+    if(videos.length === 0) {
+        videoContainer.innerHTML = `
+             <div class="col-span-full flex justify-center items-center flex-col py-20">
+                <img class="w-[120px]" src="./assets/Icon.png" alt="">
+                <h2 class="text-2xl font-bold">Oops!! Sorry, there is content here.</h2>
+            </div>
+        `;
+        return;
+    }
 
     // loop through the videos
     videos.forEach(video => {
@@ -94,6 +117,9 @@ const loadVideos = async () => {
         const res = await fetch('https://openapi.programming-hero.com/api/phero-tube/videos');
         const data = await res.json();
         const videos = data.videos;
+
+        removeActiveClass();
+        document.getElementById('btn-all').classList.add('active');
         displayVideos(videos);
     } catch (err) {
         console.log(err);
@@ -110,6 +136,16 @@ const loadCategoryVideos = async (category_id) => {
         const res = await fetch(url);
         const data = await res.json();
         const videos = data.category;
+
+
+        // remove active class from all buttons
+        removeActiveClass();
+
+        // add active class to the clicked button
+        const clickedBtn = document.getElementById(`btn-${category_id}`);
+        clickedBtn.classList.add('active');
+        console.log(clickedBtn);
+
         displayVideos(videos);
         
            
